@@ -7,7 +7,7 @@
 
 using namespace std;
 
-int fact(int n){
+long int fact(int n){
     int result = 1;
     for (int i = 1; i <= n; i++){
         result *= i;
@@ -95,6 +95,15 @@ int foo(int num){
         str[max_iter] = str[max_iter + pos_pointer];
         str[max_iter + pos_pointer] = c;
 
+//        for (int j = 0; j < vec.size(); j ++){
+//            if (str[j] == 'l'){
+//                cout << "<-"<< " ";
+//            } else {
+//                cout << "->"<< " ";
+//            }
+//        }
+//        cout << " " << endl;
+
         for (int j = 0; j < vec.size(); j ++){
             cout << vec[j] << " ";
         }
@@ -113,6 +122,7 @@ int foo(int num){
 int main(){
     int num;
     cin >> num;
+//    cout << fact(num);
     foo(num);
     return 0;
 }
