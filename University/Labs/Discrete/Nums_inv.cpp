@@ -30,7 +30,6 @@ int count_inversions(const vector<int>& vec) {
     return inversions;
 }
 
-// Функція для підрахунку загальної кількості інверсій у всіх підстановках
 int total_inversions(const vector<vector<int>>& permutations) {
     int total_inv = 0;
 
@@ -145,7 +144,7 @@ int main(){
     foo(num, v);
     long a = total_inversions(v);
     cout << a << endl;
-    int h = ((num * (num - 1 )) / 2) * fact(num);
+    int h = ((num * (num - 1 )) / 4) * fact(num);
     cout << h;
     return 0;
 }
