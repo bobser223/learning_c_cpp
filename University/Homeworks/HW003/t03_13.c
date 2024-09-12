@@ -30,6 +30,6 @@ int main(){
     printf("please enter a2, b2, c2\t");
     scanf("%lf %lf %lf", &a2, &b2, &c2);
     solve(a1, b1, c1, a2, b2, c2);
-
+    // fie
     return 0;
 }
