@@ -30,6 +30,27 @@ int count_inversions(const vector<int>& vec) {
     return inversions;
 }
 
+int count_inversions_2( vector<int>& vec) {
+    int num =5;
+    int inversions = 0;
+    int n = vec.size();
+
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (vec[i] > vec[j]) {
+                inversions++;
+            }
+        }
+    }
+    if (inversions == num){
+        for (int j = 0; j < vec.size(); j ++){
+            cout << vec[j] << " ";
+        }
+        cout << " " << endl;
+    }
+    return 0;
+}
+
 int total_inversions(const vector<vector<int>>& permutations) {
     int total_inv = 0;
 
@@ -84,8 +105,8 @@ int find_max_num(vector<int> &vec, string &str, int &max_num, int &max_iter, int
 
 }
 
-int foo(int num, vector<vector<int>> &vect){
-    if (num == 1){
+int foo(int num, vector<vector<int>> &vect) {
+    if (num == 1) {
         cout << 1 << endl;
         return 0;
     }
@@ -94,22 +115,22 @@ int foo(int num, vector<vector<int>> &vect){
     string str;
 
 
-    for (int i = 1; i <= num; i++){
+    for (int i = 1; i <= num; i++) {
         vec.push_back(i);
         str += 'l';
     }
     int iterator = 0;
 
 
-    for (int j = 0; j < vec.size(); j ++){
+    for (int j = 0; j < vec.size(); j++) {
         cout << vec[j] << " ";
     }
     cout << " " << endl;
 
-    while (true){
+    while (true) {
         int max_num, max_iter, pos_pointer;
         int break_catcher = find_max_num(vec, str, max_num, max_iter, pos_pointer);
-        if (break_catcher){
+        if (break_catcher) {
             break;
         }
         char buf;
@@ -124,15 +145,13 @@ int foo(int num, vector<vector<int>> &vect){
 
         vect.push_back(vec);
 
-        for (int j = 0; j < vec.size(); j ++){
+        for (int j = 0; j < vec.size(); j++) {
             cout << vec[j] << " ";
         }
         cout << " " << endl;
 
         iterator++;
     }
-
-
 }
 
 
@@ -144,7 +163,6 @@ int main(){
     foo(num, v);
     long a = total_inversions(v);
     cout << a << endl;
-    int h = ((num * (num - 1 )) / 4) * fact(num);
-    cout << h;
+    cout << fact(5);
     return 0;
 }
