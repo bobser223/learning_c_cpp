@@ -19,6 +19,10 @@ void max_one_1(int num){
         num = num >> 1;
         counter ++;
     }
+    if (num_clone < 0){
+        max_one_pos = sizeof(num_clone)*8 - max_one_pos - 2;
+    }
+
     if (num_clone > 0){
         cout << "max one = " << max_one_pos;
         if (max_one_pos + 2 < sizeof(num_clone)*8){
@@ -46,6 +50,9 @@ void max_one_2(int num){
 
         num = num >> 1;
         counter ++;
+    }
+    if (num_clone < 0){
+        max_one_pos = sizeof(num_clone)*8 - max_one_pos - 2;
     }
     if (num_clone > 0){
         cout << "max one = " << max_one_pos;
@@ -107,6 +114,9 @@ void max_one_bit(int num){
 
         num = num >> 1;
         counter ++;
+    }
+    if (num_clone < 0){
+        max_one_pos = sizeof(num_clone)*8 - max_one_pos - 2;
     }
     if (num_clone > 0){
         cout << "max one = " << max_one_pos;
