@@ -170,6 +170,8 @@ int main(){
     Student students[N] = {a, b, c};
 //    Student students[N];
 //    make_students_list(students);
+//    int alpha;
+//    scanf("%d", &alpha);
     int alpha = 6;
     print_students_list(students, N, NULL);
 
