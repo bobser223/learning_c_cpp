@@ -1,0 +1,5 @@
+ball 100.00UAH 2-13 y.o.
+doll 300.00UAH 5-16 y.o.
+lego 500.00UAH 6-99 y.o.
+konstuctor 100.00UAH 6-12 y.o.
+konstuctor 100.00UAH 6-12 y.o.
