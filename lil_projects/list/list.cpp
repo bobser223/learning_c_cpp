@@ -10,7 +10,8 @@ int main(){
     l.append(1000);
     l.append('l');
     l.append("kakashka");
-    for (int i = 0; i < l.len(); i++){
-        std::cout << l[i] << std::endl;
-    }
+    l.display();
+//    for (int i = 0; i < l.len(); i++){
+//        std::cout << l[i] << std::endl;
+//    }
 }
