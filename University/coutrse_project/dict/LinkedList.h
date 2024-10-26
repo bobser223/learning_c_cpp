@@ -25,7 +25,14 @@ private:
 public:
 
     LinkedList() : first_el(nullptr), size(0) {}
-
+    ~LinkedList(){
+        ListEl<var_type>* curr_el = first_el;
+        while (curr_el != nullptr){
+            ListEl<var_type>* temp = curr_el;
+            curr_el = curr_el->next_pointer;
+            delete temp;
+        }
+    }
 
     void add(var_type var){
         ListEl<var_type>* new_el = new ListEl<var_type>;
