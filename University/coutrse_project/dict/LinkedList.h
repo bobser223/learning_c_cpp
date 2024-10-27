@@ -109,9 +109,6 @@ public:
         return first_el != var;
     }
 
-
-
-
     void print(std::ostream& out = std::cout) const{
         ListEl<var_type>* curr_el = first_el;
         while (curr_el != nullptr){
@@ -125,28 +122,28 @@ public:
         return out;
     }
 
-    class Iterator {
+    class ConstIterator {
     private:
-        ListEl<var_type>* current;
+        const ListEl<var_type>* current;
 
     public:
         using iterator_category = std::forward_iterator_tag;
-        using value_type = var_type;
+        using value_type = const var_type;
         using difference_type = std::ptrdiff_t;
-        using pointer = var_type*;
-        using reference = var_type&;
+        using pointer = const var_type*;
+        using reference = const var_type&;
 
-        Iterator(ListEl<var_type>* ptr) : current(ptr) {}
+        ConstIterator(const ListEl<var_type>* ptr) : current(ptr) {}
 
-        bool operator!=(const Iterator& other) const {
+        bool operator!=(const ConstIterator& other) const {
             return current != other.current;
         }
 
-        var_type& operator*() const {
+        const var_type& operator*() const {
             return current->var;
         }
 
-        Iterator& operator++() {
+        ConstIterator& operator++() {
             if(current != nullptr){
                 current = current->next_pointer;
             }
@@ -154,50 +151,13 @@ public:
         }
     };
 
-    Iterator begin() {
-        return Iterator(first_el);
+    ConstIterator begin() const {
+        return ConstIterator(first_el);
     }
 
-    Iterator end() {
-        return Iterator(nullptr);
+    ConstIterator end() const {
+        return ConstIterator(nullptr);
     }
-
-//    class ConstIterator {
-//    private:
-//        const ListEl<var_type>* current;
-//
-//    public:
-//        using iterator_category = std::forward_iterator_tag;
-//        using value_type = const var_type;
-//        using difference_type = std::ptrdiff_t;
-//        using pointer = const var_type*;
-//        using reference = const var_type&;
-
-//        ConstIterator(const ListEl<var_type>* ptr) : current(ptr) {}
-//
-//        bool operator!=(const ConstIterator& other) const {
-//            return current != other.current;
-//        }
-//
-//        const var_type& operator*() const {
-//            return current->var;
-//        }
-//
-//        ConstIterator& operator++() {
-//            if(current != nullptr){
-//                current = current->next_pointer;
-//            }
-//            return *this;
-//        }
-//    };
-//
-//    ConstIterator begin() const {
-//        return ConstIterator(first_el);
-//    }
-//
-//    ConstIterator end() const {
-//        return ConstIterator(nullptr);
-//    }
 
 
 private:
