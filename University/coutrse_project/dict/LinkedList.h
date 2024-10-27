@@ -35,6 +35,7 @@ public:
     }
 
     void add(var_type var){
+        if(is_in(var))  throw std::logic_error("adding already existing element !!!");
         ListEl<var_type>* new_el = new ListEl<var_type>;
         new_el -> var = var;
         new_el -> next_pointer = nullptr;
@@ -55,7 +56,8 @@ public:
 
     bool is_in(var_type var){
         if (size == 0){
-            throw std::logic_error("no elements here!!!");
+//            throw std::logic_error("no elements here!!!");
+            return false;
         } else {
 
             ListEl<var_type>* curr_el = first_el;
@@ -95,6 +97,20 @@ public:
 
         size--;
     }
+
+    //just for checking is there first element;
+    template<class name>
+    bool operator==(name var){
+        return first_el == var;
+    }
+
+    template<class name>
+    bool operator!=(name var){
+        return first_el != var;
+    }
+
+
+
 
     void print(std::ostream& out = std::cout) const{
         ListEl<var_type>* curr_el = first_el;

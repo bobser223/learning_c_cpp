@@ -30,9 +30,18 @@ int main(){
 //        std::cout << el << std::endl;
 //    }
     HashSet<int> set;
-    for (int i = 10; i < 1000000000; i ++){
+    for (int i = 10; i < 100; i ++){
         set.add(i);
+        std::cout << set << std::endl;
     }
+    std::cout << set << std::endl;
+    set.pop(10);
+    std::cout << set << std::endl;
+    set.add(10);
+//    set.add(10);
+    std::cout << set << std::endl;
+    std::cout << set.is_in(5) << std::endl;
+    std::cout << set.is_in(89) << std::endl;
 
 
 
