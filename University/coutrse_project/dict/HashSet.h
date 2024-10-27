@@ -87,26 +87,6 @@ public:
     }
 
 protected:
-//    int getHash(int var) {
-//        return var;
-//
-//    }
-//
-//    int getHash(char var) {
-//        return (int)var;
-//
-//    }
-//
-//    long long getHash(const char* str) {
-//        int i = 0;
-//        long long suma;
-//        while (str[i] != '\0'){
-//            suma += str[i];
-//        }
-//
-//    } // todo remake
-
-
 
     template <typename T>
     typename std::enable_if<std::is_integral<T>::value, long long int>::type
@@ -240,7 +220,7 @@ protected:
     }
     // TODO: change to default print;
     friend std::ostream& operator <<(std::ostream& out,const HashSet& set){
-        set.debug_print(out);
+        set.print(out);
         return out;
     }
 };

@@ -35,7 +35,7 @@ public:
     }
 
     void add(var_type var){
-        if(is_in(var))  throw std::logic_error("adding already existing element !!!");
+        if(is_in(var))  return;
         ListEl<var_type>* new_el = new ListEl<var_type>;
         new_el -> var = var;
         new_el -> next_pointer = nullptr;
