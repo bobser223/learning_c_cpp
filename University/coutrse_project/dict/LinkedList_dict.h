@@ -1,6 +1,8 @@
 //
 // Created by Volodymyr Avvakumov on 27.10.2024.
 //
+#include <stdexcept>
+#include <iostream>
 
 #ifndef LEARNING_LINKEDLIST_DICT_H
 #define LEARNING_LINKEDLIST_DICT_H
@@ -14,12 +16,21 @@ struct ListEl{
     ListEl<key_type, value_type>* next_pointer;
 };
 
+
+template<typename key_type, typename value_type>
+struct Couple{
+    key_type key;
+    value_type value;
+};
+
 template<typename key_type, typename value_type>
 class LinkedList_dict {
 private:
     int size;
     ListEl<key_type, value_type>* first_el;
 public:
+    LinkedList_dict() : size(0), first_el(nullptr) {}
+
     void add(key_type key, value_type value){
         if(is_in(key))  return;
         ListEl<key_type, value_type>* new_el = new ListEl<key_type, value_type>;
@@ -56,22 +67,22 @@ public:
         }
     }
 
-    void pop(var_type var){ //todo: refactor!!!!!!!
-        if (!is_in(var)){
+    void pop(key_type key){ //todo: refactor!!!!!!!
+        if (!is_in(key)){
             throw std::logic_error("this variable isn't here!!!");
         }
 
         if (size == 1){
             delete first_el;
             first_el = nullptr;
-        } else if (first_el->var == var){
-            ListEl<var_type>* temp = first_el;
+        } else if (first_el->key == key){
+            ListEl<key_type, value_type>* temp = first_el;
             first_el = first_el->next_pointer;
             delete temp;
         } else {
-            ListEl<var_type>* previous_element = nullptr;
-            ListEl<var_type>* element_to_delete = nullptr;
-            find_element_with_var(var, previous_element, element_to_delete);
+            ListEl<key_type, value_type>* previous_element = nullptr;
+            ListEl<key_type, value_type>* element_to_delete = nullptr;
+            find_element_with_key(key, previous_element, element_to_delete);
 
             if (element_to_delete != nullptr && previous_element != nullptr){
                 previous_element->next_pointer = element_to_delete->next_pointer;
@@ -82,7 +93,81 @@ public:
         size--;
     }
 
+    int get_size(){
+        return size;
+    }
 
+    template<class name>
+    bool operator==(name var){
+        return first_el == var;
+    }
+
+    template<class name>
+    bool operator!=(name var){
+        return first_el != var;
+    }
+
+    Couple<key_type,value_type> operator[](int index){
+        if (index > size - 1) throw std::logic_error("too big index!!!");
+
+        ListEl<key_type, value_type>* curr_el = first_el;
+
+        int i = 0;
+        while(i <= index){
+            if (i == index){
+                Couple<key_type, value_type> c;
+                c.key = curr_el ->key;
+                c.value = curr_el ->value;
+                return c;
+            }
+            curr_el = curr_el -> next_pointer;
+            i++;
+        }
+
+
+    }
+
+    void print(std::ostream& out = std::cout) const{
+        ListEl<key_type, value_type>* curr_el = first_el;
+        while (curr_el != nullptr){
+            out << curr_el -> key << ':' << curr_el -> value << ' ';
+            curr_el = curr_el ->next_pointer;
+        }
+    }
+
+    friend std::ostream& operator <<(std::ostream& out,const LinkedList_dict& lst){
+        lst.print(out);
+        return out;
+    }
+
+private:
+    void find_element_with_key(key_type key, ListEl<key_type, value_type>*& previous_element, ListEl<key_type, value_type>*& element_to_delete) const {
+        if (size == 0){
+            throw std::logic_error("no elements here!!!");
+        }
+
+        previous_element = nullptr;
+        element_to_delete = nullptr;
+        ListEl<key_type, value_type>* curr_el = first_el;
+
+        while (curr_el != nullptr){
+            if (curr_el->key == key && !curr_el->is_empty){
+                element_to_delete = curr_el;
+                break;
+            }
+            previous_element = curr_el;
+            curr_el = curr_el->next_pointer;
+        }
+
+        if (element_to_delete == nullptr){
+            throw std::logic_error("Element not found!");
+        }
+    }
+    template <typename T>
+    friend class HashSet;
+
+    template<typename key_t, typename value_t>
+    friend class HashDict;
 };
 
 
