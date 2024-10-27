@@ -2,8 +2,8 @@
 // Created by Volodymyr Avvakumov on 27.10.2024.
 //
 #include <iostream>
-#include "LinkedList.h"
-#include "HashSet.h"
+#include "../set/LinkedList.h"
+#include "../set/HashSet.h"
 
 int main(){
     HashSet<int> set;
