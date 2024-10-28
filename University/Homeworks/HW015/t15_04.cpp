@@ -86,6 +86,12 @@ public:
     Segment(double a1, double b1, double a2, double b2) {init(a1, b1, a2, b2);}
     Segment(): p1(NAN, NAN), p2(NAN, NAN) {}
 
+    Point get_middle() const{
+        Point p;
+        p.x = (p1.x + p2.x)/2;
+        p.y = (p1.y + p2.y)/2;
+        return p;
+    }
 
     double get_length() const{
         return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
@@ -137,6 +143,9 @@ public:
         double determinant = a1 * b2 - a2 * b1;
 
         if (determinant == 0) {
+            if(onSegment(this->p1, other.p1, this ->p2)) return other.p1;
+            if(onSegment(this->p1, other.p2, this->p2)) return other.p2;
+
             return p_NUN;
         } else {
             double x = (b2 * c1 - b1 * c2) / determinant;
@@ -237,13 +246,13 @@ private:
 };
 
 int main(){
-    Point p1(2, 3);
-    std::cout << p1 << std::endl;
-    Point p2;
-    std::cin >>p2;
-    std::cout << p2 << std::endl;
-    std::cout << (p2 == p1) << std::endl;
-    p2.input();
+//    Point p1(2, 3);
+//    std::cout << p1 << std::endl;
+//    Point p2;
+//    std::cin >>p2;
+//    std::cout << p2 << std::endl;
+//    std::cout << (p2 == p1) << std::endl;
+//    p2.input();
 
     Segment s1(1, 2, 3, 4);
     Segment s2(-1, 0, 2, 7);
@@ -260,6 +269,11 @@ int main(){
     std::cout << s5 << std:: endl;
     std::cout << s6 << std:: endl;
     std::cout << s5.intersection(s6) << std:: endl;
+    std::cout << "middle " << s5.get_middle() << std::endl;
+    Segment s7(-4, 2, -3, 2);
+    Segment s8(-4, 2, -2, 2);
+    std::cout << s7.intersection(s8) << std:: endl;
+
 
     Segment s;
     std::cin >>s;
