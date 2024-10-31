@@ -8,6 +8,7 @@
 #define LEARNING_LINKEDLIST_DICT_H
 
 
+
 template<typename key_type, typename value_type>
 struct ListEl{
     bool is_empty;
@@ -23,6 +24,9 @@ struct Couple{
     value_type value;
 };
 
+
+
+
 template<typename key_type, typename value_type>
 class LinkedList_dict {
 private:
@@ -31,93 +35,34 @@ private:
 public:
     LinkedList_dict() : size(0), first_el(nullptr) {}
 
-    void add(key_type key, value_type value){
-        if(is_in(key))  return;
-        ListEl<key_type, value_type>* new_el = new ListEl<key_type, value_type>;
-        new_el -> key = key;
-        new_el -> value = value;
-        new_el -> next_pointer = nullptr;
-        new_el ->is_empty = false;
-        if (size == 0){
-            first_el = new_el;
-        } else {
-            ListEl<key_type, value_type>* curr_el = first_el;
-            while (curr_el -> next_pointer != nullptr){
-                curr_el = curr_el -> next_pointer;
-            }
-            curr_el -> next_pointer = new_el;
-        }
-
-        size ++;
-
-    }
+    void add(key_type key, value_type value);
+    /*
+     * pushes back ListEl with key and value
+     *
+     * checks is there element with same key as input key
+     * if there is does nothing
+     * if not makes new ListEl with input key and value then
+     * goes to the last element and changes last element
+     * next pointer to new ListEl, now new ListEl is the last element
+     * P.S if there is 0 elements first_el = new ListEl
+     */
 
 
-//    void add(key_type key, std::array<std::string, 2> value){
-//        if(is_in(key))  return;
-//        ListEl<key_type, value_type>* new_el = new ListEl<key_type, value_type>;
-//        new_el -> key = key;
-//        new_el -> value = value;
-//        new_el -> next_pointer = nullptr;
-//        new_el ->is_empty = false;
-//        if (size == 0){
-//            first_el = new_el;
-//        } else {
-//            ListEl<key_type, value_type>* curr_el = first_el;
-//            while (curr_el -> next_pointer != nullptr){
-//                curr_el = curr_el -> next_pointer;
-//            }
-//            curr_el -> next_pointer = new_el;
-//        }
-//
-//        size ++;
-//
-//    }
+    bool is_in(key_type key);
+    /*
+     * checks is key int the LinkedList_dict
+     */
 
-    bool is_in(key_type key){
-        if (size == 0){
-//            throw std::logic_error("no elements here!!!");
-            return false;
-        } else {
-
-            ListEl<key_type, value_type>* curr_el = first_el;
-            while (curr_el != nullptr){
-                if (curr_el->key == key && !curr_el->is_empty) return true;
-                curr_el = curr_el->next_pointer;
-            }
-            return false;
-        }
-    }
-
-    void pop(key_type key){ //todo: refactor!!!!!!!
-        if (!is_in(key)){
-            throw std::logic_error("this variable isn't here!!!");
-        }
-
-        if (size == 1){
-            delete first_el;
-            first_el = nullptr;
-        } else if (first_el->key == key){
-            ListEl<key_type, value_type>* temp = first_el;
-            first_el = first_el->next_pointer;
-            delete temp;
-        } else {
-            ListEl<key_type, value_type>* previous_element = nullptr;
-            ListEl<key_type, value_type>* element_to_delete = nullptr;
-            find_element_with_key(key, previous_element, element_to_delete);
-
-            if (element_to_delete != nullptr && previous_element != nullptr){
-                previous_element->next_pointer = element_to_delete->next_pointer;
-                delete element_to_delete;
-            }
-        }
-
-        size--;
-    }
+    void pop(key_type key);
+    /*
+     * deletes ListEl with given key
+     */
 
     int get_size(){
         return size;
     }
+
+    // operators
 
     template<class name>
     bool operator==(name var){
@@ -128,6 +73,11 @@ public:
     bool operator!=(name var){
         return first_el != var;
     }
+
+    /*
+     * operator != and == are needed for checking is LinkedList_dict empty
+     * I used it to check first_el is it nullptr or not;
+     */
 
     const value_type& operator[](key_type key) const{
         if (size == 0){
@@ -222,5 +172,70 @@ private:
     friend class HashDict;
 };
 
+template<typename key_type, typename value_type>
+void LinkedList_dict<key_type, value_type>::add(key_type key, value_type value){
+    // do nothing
+    if(is_in(key))  return;
+    ListEl<key_type, value_type>* new_el = new ListEl<key_type, value_type>;
+    new_el -> key = key;
+    new_el -> value = value;
+    new_el -> next_pointer = nullptr;
+    new_el ->is_empty = false;
+    if (size == 0){
+        first_el = new_el;
+    } else {
+        ListEl<key_type, value_type>* curr_el = first_el;
+        // while element is not last
+        while (curr_el -> next_pointer != nullptr){
+            curr_el = curr_el -> next_pointer;
+        }
+        curr_el -> next_pointer = new_el;
+    }
+
+    size ++;
+
+}
+
+template<typename key_type, typename value_type>
+bool LinkedList_dict<key_type, value_type>::is_in(key_type key){
+    if (size == 0){
+        return false;
+    } else {
+
+        ListEl<key_type, value_type>* curr_el = first_el;
+        while (curr_el != nullptr){
+            if (curr_el->key == key && !curr_el->is_empty) return true;
+            curr_el = curr_el->next_pointer;
+        }
+        return false;
+    }
+}
+
+template<typename key_type, typename value_type>
+void LinkedList_dict<key_type, value_type>::pop(key_type key){
+    if (!is_in(key)){
+        throw std::logic_error("this variable isn't here!!!");
+    }
+
+    if (size == 1){
+        delete first_el;
+        first_el = nullptr;
+    } else if (first_el->key == key){
+        ListEl<key_type, value_type>* temp = first_el;
+        first_el = first_el->next_pointer;
+        delete temp;
+    } else {
+        ListEl<key_type, value_type>* previous_element = nullptr;
+        ListEl<key_type, value_type>* element_to_delete = nullptr;
+        find_element_with_key(key, previous_element, element_to_delete);
+
+        if (element_to_delete != nullptr && previous_element != nullptr){
+            previous_element->next_pointer = element_to_delete->next_pointer;
+            delete element_to_delete;
+        }
+    }
+
+    size--;
+}
 
 #endif //LEARNING_LINKEDLIST_DICT_H
