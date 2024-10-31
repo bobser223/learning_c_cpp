@@ -91,7 +91,7 @@ protected:
 
     template <typename T>
     typename std::enable_if<std::is_integral<T>::value, long long int>::type
-    getHash(T value, int size) {
+    getHash(T value, int size) const {
         long long int result = 0;
         while (value) {
             result = (result << 5) | (result >> (sizeof(long long int) * 8 - 5));
@@ -104,7 +104,7 @@ protected:
 
     template <typename T>
     typename std::enable_if<std::is_floating_point<T>::value, long long int>::type
-    getHash(T value, int size) {
+    getHash(T value, int size) const {
         long long int result = 0;
         unsigned char* bytePtr = reinterpret_cast<unsigned char*>(&value);
         for (size_t i = 0; i < sizeof(T); ++i) {
@@ -117,7 +117,7 @@ protected:
 
     template <typename T>
     typename std::enable_if<std::is_pointer<T>::value, long long int>::type
-    getHash(T value, int size) {
+    getHash(T value, int size) const {
         long long int result = 0;
         uintptr_t ptr = reinterpret_cast<uintptr_t>(value);
         unsigned char* bytePtr = reinterpret_cast<unsigned char*>(&ptr);
@@ -128,7 +128,7 @@ protected:
         return result % size;
     }
 
-    long long int getHash(const std::string& value, int size) {
+    [[nodiscard]] long long int getHash(const std::string& value, int size) const{
         long long int result = 0;
         for (char c : value) {
             result = (result << 5) | (result >> (sizeof(long long int) * 8 - 5));
@@ -141,7 +141,7 @@ protected:
     typename std::enable_if<!std::is_integral<T>::value &&
                             !std::is_floating_point<T>::value &&
                             !std::is_pointer<T>::value, long long int>::type
-    getHash(const T& value, int size) {
+    getHash(const T& value, int size) const {
         long long int result = 0;
         const unsigned char* bytePtr = reinterpret_cast<const unsigned char*>(&value);
         for (size_t i = 0; i < sizeof(T); ++i) {
@@ -172,7 +172,7 @@ public: //TODO protected
         for (int i = 0; i < real_size; i ++){
             if (element_arr[i] != nullptr){
                 for (int j = 0; j < element_arr[i].get_size(); j++){
-                    Couple<key_t, value_t> c = element_arr[i][j];
+                    Couple<key_t, value_t> c = element_arr[i].get_couple(j);
                     add_to_array(new_lst, new_size, c.key, c.value);
                 }
             }

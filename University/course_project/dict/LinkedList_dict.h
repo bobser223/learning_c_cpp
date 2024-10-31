@@ -159,7 +159,21 @@ public:
         }
     }
 
-    Couple<key_type,value_type> operator[](int index){
+    void print(std::ostream& out = std::cout) const{
+        ListEl<key_type, value_type>* curr_el = first_el;
+        while (curr_el != nullptr){
+            out << curr_el -> key << ':' << curr_el -> value << ' ';
+            curr_el = curr_el ->next_pointer;
+        }
+    }
+
+    friend std::ostream& operator <<(std::ostream& out,const LinkedList_dict& lst){
+        lst.print(out);
+        return out;
+    }
+
+private:
+    Couple<key_type,value_type> get_couple(int index){ // TODO: previously operator []
         if (index > size - 1) throw std::logic_error("too big index!!!");
 
         ListEl<key_type, value_type>* curr_el = first_el;
@@ -179,20 +193,6 @@ public:
 
     }
 
-    void print(std::ostream& out = std::cout) const{
-        ListEl<key_type, value_type>* curr_el = first_el;
-        while (curr_el != nullptr){
-            out << curr_el -> key << ':' << curr_el -> value << ' ';
-            curr_el = curr_el ->next_pointer;
-        }
-    }
-
-    friend std::ostream& operator <<(std::ostream& out,const LinkedList_dict& lst){
-        lst.print(out);
-        return out;
-    }
-
-private:
     void find_element_with_key(key_type key, ListEl<key_type, value_type>*& previous_element, ListEl<key_type, value_type>*& element_to_delete) const {
         if (size == 0){
             throw std::logic_error("no elements here!!!");
