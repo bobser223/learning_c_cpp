@@ -5,6 +5,11 @@
 
 using namespace std;
 
+class RationalError: public logic_error {
+public:
+    RationalError(const char* msg) : logic_error(msg) {};
+};
+
 
 class Rational {
 
@@ -142,23 +147,36 @@ float pi(double eps=0.009){
 int main() {
     srand(time(nullptr));
 
-    const int N = 4;
-    Rational array[N] = {
-            Rational(1, 2),
-            Rational(5),
-            Rational(),
-            Rational::random()
-    };
+//    const int N = 4;
+    int n;
+    cin >> n;
+    Rational* arr = new Rational[n];
+    for (int i = 0; i < n ; i++){
+        try{
+            cin >> arr[i];
+        } catch(RationalError& e){
+            cout << e.what() << endl;
+        }
+        catch(exception& e){
+            cerr << e.what() << endl;
+        } catch(...){
+            cerr << "unknown" << endl;
+        }
+    }
+
+
+    delete[] arr;
+
     // array[0].input();
     // cin >> array[0];
     // array[0].add(Rational(1, 3));
-    array[0] = array[0] - Rational(1, 3);
-
-    for (int i = 0; i < N; i++) {
-        cout << array[i] << endl;
-    }
-
-    cout << pi() << endl;
-
-    return 0;
+//    array[0] = array[0] - Rational(1, 3);
+//
+//    for (int i = 0; i < N; i++) {
+//        cout << array[i] << endl;
+//    }
+//
+//    cout << pi() << endl;
+//
+//    return 0;
 }

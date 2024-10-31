@@ -3,6 +3,11 @@
 #include <cstdlib>
 using namespace std;
 
+class RationalError: public logic_error {
+public:
+    RationalError(const char* msg) : logic_error(msg) {};
+};
+
 class Rational {
 private:
     int number;

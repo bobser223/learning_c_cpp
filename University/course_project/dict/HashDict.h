@@ -33,7 +33,9 @@ public:
         if (get_occupancy() > 75)
             create_new_elements_list();
 
-        int position = getHash(key, real_size);
+        unsigned position = getHash(key, real_size);
+
+//        std::cout << position <<" " << real_size << std::endl;
 
         element_arr[position].add(key, value);
 
@@ -62,6 +64,21 @@ public:
     bool is_in(key_t key){
         int position = HashDict<key_t, value_t>::getHash(key, real_size);
         return HashDict<key_t, value_t>::element_arr[position].is_in(key);
+    }
+
+//    value_t operator[](key_t key) const {
+//        int position = HashDict<key_t, value_t>::getHash(key, real_size);
+//        return element_arr[position];
+//    }
+
+    value_t& operator[](key_t key) {
+        int position = HashDict<key_t, value_t>::getHash(key, real_size);
+        return element_arr[position][key];
+    }
+
+    const value_t& operator[](key_t key) const {
+        int position = getHash(key, real_size);
+        return element_arr[position][key];
     }
 
 
@@ -110,6 +127,15 @@ protected:
         }
         return result % size;
     }
+
+    long long int getHash(const std::string& value, int size) {
+        long long int result = 0;
+        for (char c : value) {
+            result = (result << 5) | (result >> (sizeof(long long int) * 8 - 5));
+            result ^= static_cast<unsigned char>(c);
+        }
+        return result % size;
+    }
     // for random type;
     template <typename T>
     typename std::enable_if<!std::is_integral<T>::value &&
@@ -122,7 +148,7 @@ protected:
             result = (result << 5) | (result >> (sizeof(long long int) * 8 - 5));
             result ^= bytePtr[i];
         }
-        return result % size;
+        return (result % size);
     }
 public: //TODO protected
     float get_occupancy(){
@@ -191,6 +217,8 @@ public: //TODO protected
         dict.print(out);
         return out;
     }
+
+
 
 
 

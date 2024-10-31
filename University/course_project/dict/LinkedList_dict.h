@@ -52,6 +52,28 @@ public:
 
     }
 
+
+//    void add(key_type key, std::array<std::string, 2> value){
+//        if(is_in(key))  return;
+//        ListEl<key_type, value_type>* new_el = new ListEl<key_type, value_type>;
+//        new_el -> key = key;
+//        new_el -> value = value;
+//        new_el -> next_pointer = nullptr;
+//        new_el ->is_empty = false;
+//        if (size == 0){
+//            first_el = new_el;
+//        } else {
+//            ListEl<key_type, value_type>* curr_el = first_el;
+//            while (curr_el -> next_pointer != nullptr){
+//                curr_el = curr_el -> next_pointer;
+//            }
+//            curr_el -> next_pointer = new_el;
+//        }
+//
+//        size ++;
+//
+//    }
+
     bool is_in(key_type key){
         if (size == 0){
 //            throw std::logic_error("no elements here!!!");
@@ -105,6 +127,36 @@ public:
     template<class name>
     bool operator!=(name var){
         return first_el != var;
+    }
+
+    const value_type& operator[](key_type key) const{
+        if (size == 0){
+            throw std::logic_error("no elements here!!!");
+//            return false;
+        } else {
+
+            ListEl<key_type, value_type>* curr_el = first_el;
+            while (curr_el != nullptr){
+                if (curr_el->key == key && !curr_el->is_empty) return curr_el ->value;
+                curr_el = curr_el->next_pointer;
+            }
+            throw std::logic_error("no element here!!!");
+        }
+    }
+
+    value_type& operator[](key_type key){
+        if (size == 0){
+            throw std::logic_error("no elements here!!!");
+//            return false;
+        } else {
+
+            ListEl<key_type, value_type>* curr_el = first_el;
+            while (curr_el != nullptr){
+                if (curr_el->key == key && !curr_el->is_empty) return curr_el ->value;
+                curr_el = curr_el->next_pointer;
+            }
+            throw std::logic_error("no element here!!!");
+        }
     }
 
     Couple<key_type,value_type> operator[](int index){
