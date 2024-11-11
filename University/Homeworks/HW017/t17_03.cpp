@@ -4,12 +4,28 @@
 
 #include <string>
 #include <cmath>
+#include <exception>
 #include <cassert>
+
+
 #include "../../course_project/dict/LinkedList_dict.h"
 #include "../../course_project/dict/HashDict.h"
 
+class MyException : public std::exception {
+private:
+    std::string message;
 
+public:
+    explicit MyException(const std::string& msg) : message(msg) {}
 
+    const char* what() const noexcept override {
+        return message.c_str();
+    }
+};
+
+void MyAssert(bool condition, const std::string& message = "Assertion failed!"){
+    if (!condition) throw MyException(message);
+}
 
 int get_len(const char* str){
     int i = 0;
@@ -32,6 +48,7 @@ void from_decimal(int num, int system, std::string& result,  const HashDict<int,
 
 
 int to_decimal(const char* symbols, int system) {
+    MyAssert(system <= 16, "wrong system");
     int result = 0;
     int curr_num = 0;
     int len = get_len(symbols);
@@ -41,7 +58,9 @@ int to_decimal(const char* symbols, int system) {
         if (ch >= '0' && ch <= '9') {
             curr_num = ch - '0';
         } else {
-            assert(ch - 'A' <= system && "wrong system");
+            if ((ch - 'A' >= system)){
+                throw MyException("wrong system");
+            }
             curr_num = ch - 'A' + 10;
         }
         result = result * system + curr_num;
@@ -57,8 +76,8 @@ int to_decimal(const char* symbols, int system) {
 
     from_decimal(result, system, check, dict);
 
-
-    assert(check == symbols);
+    if (check != symbols)
+        throw MyException("incorrect result");
     return result;
 }
 
@@ -76,7 +95,7 @@ int main(){
     std::string result;
 
     from_decimal(100,15, result, dict);
-    printf("%d\n",to_decimal("623C01", 16));
+    printf("%d\n",to_decimal("623C01", 17));
     std::cout << result << std::endl;
 //    printf("%d",to_decimal("1010", 2));
 }
