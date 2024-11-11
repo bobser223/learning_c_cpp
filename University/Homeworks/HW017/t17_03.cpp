@@ -95,7 +95,7 @@ int main(){
     std::string result;
 
     from_decimal(100,15, result, dict);
-    printf("%d\n",to_decimal("623C01", 17));
+    printf("%d\n",to_decimal("623C01", 16));
     std::cout << result << std::endl;
 //    printf("%d",to_decimal("1010", 2));
 }
