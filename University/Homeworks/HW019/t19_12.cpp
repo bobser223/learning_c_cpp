@@ -91,7 +91,7 @@ template<typename T>
 template<class U>
 Matrix<T> Matrix<T>::operator*(const Matrix<U> &other) const {
     if (this->m != other.n)
-        throw logic_error("Неможливо перемножити матриці: невідповідність розмірів");
+        throw logic_error("incorrect sizes");
 
     Matrix<T> result(this->n, other.m);
 
@@ -112,7 +112,7 @@ template<typename T>
 template<class U>
 vector<T> Matrix<T>::operator*(const vector<U>& vec) const {
     if (this->m != vec.size())
-        throw logic_error("Неможливо перемножити матрицю на вектор: невідповідність розмірів");
+        throw logic_error("incorrect sizes");
 
     vector<T> result(this->n, T());
 
@@ -165,8 +165,23 @@ int main(){
                             {1,1,1}
     });
     cout << "Матриця A:\n" << A;
-    cout << "Матриця B:\n" << D;
-    cout << "Матриця C = A + B:\n" << A+D;
+    cout << "Матриця D:\n" << D;
+    cout << "Матриця A + D:\n" << A+D;
 
+    Matrix<float> G({{1.2, 3.4, 7.8},
+                     {3.5, 1.999, 8},
+                     {4.01, 5, 2.333}});
+
+    Matrix<float> H ({{1.9, 0.4, 3.5},
+                      {5.9, 1, 0.93},
+                      {7.4, 8, 0.333}});
+
+    cout << "Матриця G:\n" << G;
+    cout << "Матриця H:\n" << H;
+    cout << "Матриця G + H:\n" << G+H;
+
+    cout << "Матриця G:\n" << G;
+    cout << "Матриця H:\n" << H;
+    cout << "Матриця G*H:\n" << G*H;
     return 0;
 }
