@@ -41,6 +41,7 @@ map<char, int> chars_map(const vector<string>& vec){
 void count_first_chars(){
     map<char, int> dict = chars_map(input_vector());
     for (auto [a, b]: dict){
+        // ітератор і так сортує, додатковий сорт лише збільшить кількість необхідних ресурсів і нічого не дасть
         cout << a << " : " << b << endl;
     }
 }
