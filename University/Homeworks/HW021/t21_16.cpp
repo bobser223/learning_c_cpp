@@ -14,21 +14,36 @@ void print(const cont&c){
 }
 
 namespace bob{
-    template <typename InputIt, typename UnaryOperation, typename Predicate>
-    InputIt transform_if(InputIt first, InputIt last, UnaryOperation op, Predicate pred){
-        while (first != last) {
-            if (pred(*first)) {
-                *first = op(*first);
+    template <typename InputIt, typename OutputIt, typename UnaryOperation, typename Predicate>
+    InputIt transform_if(InputIt first, InputIt last,  OutputIt result, UnaryOperation op, Predicate pred){
+        if (first != result){
+            while (first != last) {
+                if (pred(*first)) {
+                    *result++ = op(*first);
+                }
+                first++;
             }
-            first++;
+            return first;
+        } else {
+            while (first != last) {
+                if (pred(*first)) {
+                    *result = op(*first);
+                }
+                result++;
+                first++;
+            }
+            return first;
         }
-        return first;
+
     }
 
 }
 
 int main(){
     std::vector<int> vec1 = {1, 2, 3, 4, 5, 6, 7};
-    bob::transform_if(vec1.begin(), vec1.end(), [](int a){ return a*10;}, [](int a){ return a % 2 == 0;});
+    std::vector<int> vec2 = {1, 0,0,0,0,0,0};
+    bob::transform_if(vec1.begin(), vec1.end(), vec1.begin(), [](int a){ return a*10;}, [](int a){ return a % 2 == 0;});
     print(vec1);
+    bob::transform_if(vec1.begin(), vec1.end(), vec2.begin(), [](int a){ return a*10;}, [](int a){ return a % 2 == 0;});
+    print(vec2);
 }
